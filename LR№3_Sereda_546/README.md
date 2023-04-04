@@ -1,14 +1,14 @@
-﻿#Лабораторна робота №3
+﻿Лабораторна робота №3
 
 Середа О.В. 546група
 
-#1.Встановлюємо Terraform 
+1.Встановлюємо Terraform 
 
 Для цього відкриваємо PowerShell та пишемо команду **choco install terraform,** після чого вводимо команду **terraform version,** для перевірки чи все добре встановилося та подивимось яка версія, результат на рисунку нижче:
 
 ![](Aspose.Words.48759d12-f1b1-4c7a-9772-6a508f29ada5.001.png)
 
-#2.Далі створюємо новий проект GCP:
+2.Далі створюємо новий проект GCP:
 
 ![](Aspose.Words.48759d12-f1b1-4c7a-9772-6a508f29ada5.002.png)
 
@@ -22,10 +22,10 @@
 
 ![](Aspose.Words.48759d12-f1b1-4c7a-9772-6a508f29ada5.005.png)
 
-#3.Наступним кроком переходимо до налаштування **Terraform.** Створюємо три файли типу **(main, variables, outputs).tf** в яких буде записан певний код. У **main** вказується **Terraform,** що працюватиме із GCP, створюється  **network** та **subnetwork**, у **vm\_instance** задаємо 5 тегів з будь яким ім’ям(без великих літер на пробілів, бо буде викликати похибку), та конфігуруємо **firewall(брандмауэр).** В **variables** вказуємо Project ID:назву та назву файлу з ключем. 
+3.Наступним кроком переходимо до налаштування **Terraform.** Створюємо три файли типу **(main, variables, outputs).tf** в яких буде записан певний код. У **main** вказується **Terraform,** що працюватиме із GCP, створюється  **network** та **subnetwork**, у **vm\_instance** задаємо 5 тегів з будь яким ім’ям(без великих літер на пробілів, бо буде викликати похибку), та конфігуруємо **firewall(брандмауэр).** В **variables** вказуємо Project ID:назву та назву файлу з ключем. 
 
-#**main.tf:**
-'''
+**main.tf:**
+```
 terraform {
 	required\_providers {
 	 google = {
@@ -79,9 +79,9 @@ resource "google\_compute\_firewall" "vpc-network-allow" {
 	target\_tags = ["http-server","https-server"]
 	source\_tags = ["vpc-network-allow"]
 }
-'''
-#**variables.tf:**
-'''
+```
+**variables.tf:**
+```
 variable "project" {
 	default = "laba3-382520"
 }
@@ -101,17 +101,17 @@ variable "machine\_name" {
 variable "subnet\_name" {
 	default = "laba3-382520-subnet-1"
 }
-'''
-#**outputs.tf:**
-'''
+```
+**outputs.tf:**
+```
 output "ip\_intra" {
 	value = google\_compute\_instance.vm\_instance.network\_interface.0.network\_ip
 }
 output "ip\_extra" {
 	value = google\_compute\_instance.vm\_instance.network\_interface.0.access\_config.0.nat\_ip
 }
-'''
-#4.Після того, як підготували ці три файли, повертаємось у PowerShell та прописуємо наступну команду **terraform init**, тобто ініціалізуємо проект, після чого дописуємо ще одну команду **terraform apply**, щоб отримати список наступних дій **Terraform.**
+```
+4.Після того, як підготували ці три файли, повертаємось у PowerShell та прописуємо наступну команду **terraform init**, тобто ініціалізуємо проект, після чого дописуємо ще одну команду **terraform apply**, щоб отримати список наступних дій **Terraform.**
 
 ![](Aspose.Words.48759d12-f1b1-4c7a-9772-6a508f29ada5.006.png)
 
